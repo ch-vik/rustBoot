@@ -7,16 +7,18 @@
 #![feature(asm_const)]
 #![allow(warnings)]
 #![feature(core_intrinsics)]
+#[cfg(feature = "microchip")]
+pub mod microchip;
 #[cfg(feature = "nrf")]
 pub mod nrf;
-#[cfg(feature = "rpi")]
-pub mod rpi;
 #[cfg(feature = "nxp")]
 pub mod nxp;
-#[cfg(feature = "stm")]
-pub mod stm;
 #[cfg(feature = "pico")]
 pub mod pico;
+#[cfg(feature = "rpi")]
+pub mod rpi;
+#[cfg(feature = "stm")]
+pub mod stm;
 
 /// This is the trait that abstracts out the necessary hardware-specific flash operations
 /// such as
@@ -36,6 +38,9 @@ pub trait FlashInterface {
 // Arch-specific code
 pub fn preboot() {}
 pub fn boot_from(fw_base_address: usize) -> ! {
+    #[cfg(feature = "atsamd21j17")]
+    crate::microchip::atsamd21j17::boot_from(fw_base_address);
+
     #[cfg(feature = "nrf52840")]
     crate::nrf::nrf52840::boot_from(fw_base_address);
 

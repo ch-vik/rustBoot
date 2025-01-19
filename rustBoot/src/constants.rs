@@ -1,6 +1,16 @@
 #![allow(non_snake_case)]
 
 // **** TARGET PLATFORM - FLASH PARTIONINING ****
+#[cfg(feature = "atsamd21j17")]
+pub const SECTOR_SIZE: usize = 0x1000;
+#[cfg(feature = "atsamd21j17")]
+pub const PARTITION_SIZE: usize = 0x8000;
+#[cfg(feature = "atsamd21j17")]
+pub const BOOT_PARTITION_ADDRESS: usize = 0x8000;
+#[cfg(feature = "atsamd21j17")]
+pub const SWAP_PARTITION_ADDRESS: usize = 0x10000;
+#[cfg(feature = "atsamd21j17")]
+pub const UPDATE_PARTITION_ADDRESS: usize = 0x18000;
 
 #[cfg(feature = "nrf52840")]
 pub const SECTOR_SIZE: usize = 0x1000;
